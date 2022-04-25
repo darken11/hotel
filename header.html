@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <link href="./bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+		<link href="./bootstrap/css/Aristo/Aristo.css" rel="stylesheet" type="text/css">
+              
+		<script src="./bootstrap/js/jquery.js"></script> 
+		<script src="./bootstrap/js/bootstrap.min.js "></script>
+		<script language="Javascript">
+//Fonction nécessaire : ne rien modifier ici...
+function getXhr()
+{
+    var xhr = null; 
+			
+	if(window.XMLHttpRequest) // Firefox et autres
+		xhr = new XMLHttpRequest(); 
+	else if(window.ActiveXObject)
+	{ // Internet Explorer 
+		try 
+		{
+			xhr = new ActiveXObject("Msxml2.XMLHTTP");
+		} catch (e) {
+			xhr = new ActiveXObject("Microsoft.XMLHTTP");
+		}
+	}
+	else 
+	{ // XMLHttpRequest non supporté par le navigateur 
+		alert("Votre navigateur ne supporte pas les objets XMLHTTPRequest..."); 
+		xhr = false; 
+	} 
+            
+	return xhr;
+}
+
+//Fonction de liste dynamique
+function go()
+{
+   document.getElementById('listeChambresDispo').innerHTML = "";
+	var xhr = getXhr();
+			
+	// On défini ce qu'on va faire quand on aura la réponse
+	xhr.onreadystatechange = function()
+	{  
+		// On ne fait quelque chose que si on a tout reçu et que le serveur est ok
+		if(xhr.readyState == 4 && xhr.status == 200){
+		
+			leselect = xhr.responseText;
+                        
+		
+			// On se sert de innerHTML pour rajouter les chambres à la liste des chambres
+			document.getElementById('listeChambresDispo').innerHTML = leselect;
+		}
+	}
+
+	// On poste la requête ajax vers le fichier de traitement
+	xhr.open("POST","listeChambresDispo.php",true);
+	
+	// ne pas oublier ça pour le post
+	xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+			
+	// ne pas oublier de poster les arguments
+		//On sélectionne le champ date
+		sel = document.getElementById('lesdates');
+		//On sélectionne la valeur de la date
+		dateJ = sel.options[sel.selectedIndex].value;
+	    
+		//On met la sélection dans la variable que l'on va poster
+		xhr.send("dateJ=" + dateJ);
+             
+}
+
+</script>
+
+		
+        <title>hotel de la baie</title>
+    </head>
+ 
+    <body>
+        <div id="container-fluid">
+			<div class="row-fluid">
+				<header>
+					<div class="span12"> 
+						<img src="images/hotel.png" class="img-circle">
+					</div>
+				</header>
+			</div>
+		</div>
+		
+	

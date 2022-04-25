@@ -1,0 +1,78 @@
+
+
+--
+-- Fonctions
+--
+CREATE DEFINER=`root`@`localhost` FUNCTION `ajout1jour`(j date,p int,n int) RETURNS int(11)
+    DETERMINISTIC
+begin
+
+declare v_ret int;
+
+
+
+select count(*) into v_ret from calendrier where datej like j;
+
+
+
+if v_ret = 0
+
+then
+
+insert into calendrier values (j,p,n);
+
+set v_ret = 1;
+
+else
+
+set v_ret = 0;
+
+end if;
+
+
+
+return v_ret;
+
+end$$
+
+CREATE DEFINER=`root`@`localhost` FUNCTION `ajoutjours`(`debut` DATE, `fin` DATE, `periode` INT, `nbLits` INT) RETURNS int(11)
+    DETERMINISTIC
+begin
+--
+-- Cette fonction permet de déclarer une période d ouverture 
+-- 1er paramètre: Début de la période d ouverture
+-- 2me paramètre: Fin de la période d ouverture 
+-- 3me paramètre: Le n° du code tarif à appliquer
+-- 4me paramètre: Le nombre de lits bébé que possède l hotel.
+-- Cette fonction retourne le nombre de jours effectivement insérés.
+--
+declare v_ret int;
+
+declare v_date date;
+
+
+
+set v_ret = 0;
+
+set v_date = debut;
+
+
+
+while v_date < fin
+
+do
+
+set v_ret = ajout1jour(v_date, periode, nbLits);
+
+
+
+set v_date = adddate(v_date,1);
+
+end while;
+
+
+
+return v_ret;
+
+end$$
+

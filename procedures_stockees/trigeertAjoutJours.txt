@@ -1,0 +1,43 @@
+DROP TRIGGER IF EXISTS `tajoutjours`;
+DELIMITER $$
+CREATE TRIGGER `tajoutjours` AFTER INSERT ON `calendrier`
+ FOR EACH ROW begin
+
+declare v_fin int;
+
+declare v_numero int;
+
+declare curchambre cursor for select numero from chambre;
+
+declare continue handler for sqlstate '02000' set v_fin = 1;
+
+
+
+set v_fin = 0;
+
+
+
+open curchambre;
+
+
+
+fetch curchambre into v_numero;
+
+
+
+while v_fin = 0
+
+do
+
+insert into disponibilite values (v_numero,new.datej);
+
+fetch curchambre into v_numero;
+
+end while;
+
+
+
+close curchambre;
+
+end
+

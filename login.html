@@ -1,0 +1,62 @@
+			<div class="row-fluid">	
+				<div class="span3 offset2">
+			
+				<nav class="navbar navbar-inverse">
+					<div class="navbar-inner">
+						<div class="nav">
+							<ul class="nav">
+								<li> <a href="index.php">Accueil</a> </li>
+								
+							</ul>
+						</div>
+					</div>
+				</nav>
+				</div>
+			</div>	
+			
+			
+			<div class="row-fluid">
+				<div class="span5 offset2">
+					<form class="form-inline well">
+					<div class="input-append">
+						<div class="control-group">
+							<div class="controls">
+							<input type="text" id="login" name="login" placeholder="Login"><br/>
+							<input type="password" placeholder="Password">				
+							<button type="submit" class="btn btn-primary pull-right">Envoyer</button>
+							<div class="alert alert-error hide">
+							<h4 class="alert-heading">Erreur !
+							<br/>
+							Vous devez entrer au moins 4 caractères  pour le login! 
+							</h4>
+							</div>
+							</div>
+						</div>
+					</div>
+					</form>
+				</div>
+			</div>			
+		</div>
+<script>
+	$( "form" ).submit(function( event ) {
+ 
+		if($("#login").val().length < 4){
+				$("#login").addClass("error");
+				$("div.alert").show("slow").delay(4000).hide("slow");
+				return false;
+			}
+
+		});
+
+
+ 
+</script>
+
+
+
+
+
+
+
+
+
